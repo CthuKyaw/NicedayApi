@@ -24,6 +24,7 @@ router.use(cors({
 
 const { checkToken } = require("../../auth/token_validation");
 
+/*
 router.post("/users",checkToken, createUser);
 router.get("/users/all",checkToken, getUsers);
 router.get("/users/single",checkToken, getUserById);
@@ -32,6 +33,12 @@ router.delete("/users",checkToken, deleteUser);
 router.patch("/users/suspend",checkToken, suspendOrUnsuspendUser);
 router.post("/users/login", login);
 router.get("/workout",checkToken,getUserWorkout);
-router.post("/workout",checkToken,createWorkoutRecord);
+router.post("/workout",checkToken,createWorkoutRecord);*/
+
+router.get("/users",(req,res)=>{
+    res.json({
+        "message": "request received"
+    })
+})
 
 module.exports = router;
