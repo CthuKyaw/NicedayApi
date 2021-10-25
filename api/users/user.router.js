@@ -17,7 +17,7 @@ const {
 const router = require("express").Router();
 router.use(express.json());
 router.use(cors({
-    origin:"http://localhost:3001",
+    origin:"http://156.67.216.116",
     methods:["GET","POST","PUT","DELETE","PATCH"],
     credentials:true
 }));
