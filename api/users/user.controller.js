@@ -183,14 +183,14 @@ module.exports = {
         const data = req.body;
         try {
             getUserByUsername(data, (err, results) => {
+
                 if (err) {
                     console.log(err);
                 }
                 if (!results) {
                     return res.json({
                         success: 0,
-                        message: `Invalid username or password.
-                        data.password:${data.password} results.Password: ${results.Password}`
+                        message: `Invalid username or password`
                     })
                 }
                 const result = compareSync(data.password, results.Password);
@@ -213,8 +213,7 @@ module.exports = {
                 else {
                     return res.json({
                         success: 0,
-                        message: `Password Compare failed. ${data.password} 
-                        results.Password: ${results.Password}`
+                        message: `Password Compare failed`
                     });
                 }
             });
