@@ -10,11 +10,20 @@ const {
     suspendOrUnsuspendUser
 } = require("./user.service");
 
+var winston = require('winston');
+
+var logger = new winston.Logger({
+    level: 'error',
+    transports: [
+        new (winston.transports.File)({ filename: 'error.log' })
+    ]
+});
+
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 module.exports = {
     createUser: (req, res) => {
-        try{
+        try {
             const body = req.body;
             const salt = genSaltSync(10);
             body.password = hashSync(body.password, salt);
@@ -26,7 +35,7 @@ module.exports = {
                         message: err
                     });
                 }
-    
+
                 return res.json({
                     success: 1,
                     message: "Account successfully created.",
@@ -34,16 +43,17 @@ module.exports = {
                 });
             });
         }
-        catch(e){
+        catch (e) {
+            logger.log('error', 'Error at user.controller createUser', e);
             return res.json({
                 success: 0,
                 message: e
             });
         }
-        
+
     },
     getUsers: (req, res) => {
-        try{
+        try {
             getUsers((err, results) => {
                 if (err) {
                     //console.log(err);
@@ -58,16 +68,17 @@ module.exports = {
                 });
             })
         }
-        catch(e){
+        catch (e) {
+            logger.log('error', 'Error at user.controller getUsers %s', e);
             return res.json({
                 success: 0,
                 message: e
             });
         }
-        
+
     },
     getUserById: (req, res) => {
-        try{
+        try {
             const data = req.body;
             getUserById(data, (err, results) => {
                 if (err) {
@@ -82,16 +93,17 @@ module.exports = {
                 });
             })
         }
-        catch(e){
+        catch (e) {
+            logger.log('error', 'Error at user.controller getUserById  %s', e);
             return res.json({
                 success: 0,
                 message: e
             });
         }
-        
+
     },
     updateUser: (req, res) => {
-        try{
+        try {
             const data = req.body;
             const salt = genSaltSync(10);
             data.password = hashSync(data.password, salt);
@@ -109,16 +121,17 @@ module.exports = {
                 });
             });
         }
-        catch(e){
+        catch (e) {
+            logger.log('error', 'Error at user.controller updateUser %s', e);
             return res.json({
                 success: 0,
                 message: e
             });
         }
-        
+
     },
     deleteUser: (req, res) => {
-        try{
+        try {
             const data = req.body;
             deleteUser(data.id, (err, results) => {
                 if (err) {
@@ -140,16 +153,17 @@ module.exports = {
                 });
             })
         }
-        catch(e){
+        catch (e) {
+            logger.log('error', 'Error at user.controller deleteUser %s', e);
             return res.json({
                 success: 0,
                 message: e
             });
         }
-        
+
     },
     suspendOrUnsuspendUser: (req, res) => {
-        try{
+        try {
             const data = req.body;
             suspendOrUnsuspendUser(data, (err, results) => {
                 if (err) {
@@ -162,22 +176,23 @@ module.exports = {
                 if (!results) {
                     return res.send(500).json({
                         success: 0,
-                        message: `${data.active == 2?'Unable to suspend user':'Unable to un-suspend user'}`
+                        message: `${data.active == 2 ? 'Unable to suspend user' : 'Unable to un-suspend user'}`
                     });
                 }
                 return res.status(200).json({
                     success: 1,
-                    message: `${data.active == 2?'User Unsuspended':'User Suspended (This user will not be able to login!)'}`
+                    message: `${data.active == 2 ? 'User Unsuspended' : 'User Suspended (This user will not be able to login!)'}`
                 });
             })
         }
-        catch(e){
+        catch (e) {
+            logger.log('error', 'Error at user.controller suspendOrUnsuspendUser %s', e);
             return res.json({
                 success: 0,
                 message: e
             });
         }
-        
+
     },
     login: (req, res) => {
         const data = req.body;
@@ -219,6 +234,7 @@ module.exports = {
             });
         }
         catch (err) {
+            logger.log('error', 'Error at user.controller login %s', e);
             return res.json({
                 success: 0,
                 message: "Request error"
@@ -227,11 +243,11 @@ module.exports = {
 
     },
     getUserWorkout: (req, res) => {
-        try{
+        try {
             const data = req.query;
-            getWorkoutData(data,(err, results) => {
+            getWorkoutData(data, (err, results) => {
                 if (err) {
-    
+
                     return res.send(500).json({
                         success: 0,
                         message: "Failed to fetch workout data"
@@ -239,20 +255,21 @@ module.exports = {
                 }
                 return res.status(200).json({
                     success: 1,
-                    rows:results
+                    rows: results
                 });
             })
         }
-        catch(e){
+        catch (e) {
+            logger.log('error', 'Error at user.controller getUserWorkout %s', e);
             return res.json({
                 success: 0,
                 message: e
             });
         }
-        
+
     },
     createWorkoutRecord: (req, res) => {
-        try{
+        try {
             const body = req.body;
             createRecord(body, (err, results) => {
                 if (err) {
@@ -262,7 +279,7 @@ module.exports = {
                         message: err
                     });
                 }
-    
+
                 return res.json({
                     success: 1,
                     message: "Status updated.",
@@ -270,13 +287,14 @@ module.exports = {
                 });
             });
         }
-        catch(e){
+        catch (e) {
+            logger.log('error', 'Error at user.controller createWorkoutRecord %s', e);
             return res.json({
                 success: 0,
                 message: e
             });
         }
-        
+
     }
-    
+
 }
