@@ -25,7 +25,7 @@ router.use(cors({
 const { checkToken } = require("../../auth/token_validation");
 
 
-router.post("/users",checkToken, createUser);
+router.post("/users",createUser);
 router.get("/users/all",checkToken, getUsers);
 router.get("/users/single",checkToken, getUserById);
 router.patch("/users",checkToken, updateUser);
