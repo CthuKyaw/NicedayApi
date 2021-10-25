@@ -24,12 +24,12 @@ router.use(cors({
 
 const { checkToken } = require("../../auth/token_validation");
 
-router.post("/",checkToken, createUser);
-router.get("/all",checkToken, getUsers);
-router.get("/single",checkToken, getUserById);
-router.patch("/",checkToken, updateUser);
-router.delete("/",checkToken, deleteUser);
-router.patch("/suspend",checkToken, suspendOrUnsuspendUser);
+router.post("/users",checkToken, createUser);
+router.get("/users/all",checkToken, getUsers);
+router.get("/users/single",checkToken, getUserById);
+router.patch("/users",checkToken, updateUser);
+router.delete("/users",checkToken, deleteUser);
+router.patch("/users/suspend",checkToken, suspendOrUnsuspendUser);
 router.post("/login", login);
 router.get("/workout",checkToken,getUserWorkout);
 router.post("/workout",checkToken,createWorkoutRecord);
