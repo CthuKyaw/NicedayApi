@@ -213,7 +213,8 @@ module.exports = {
                 else {
                     return res.json({
                         success: 0,
-                        message: "Password Compare failed. ${data.password} results.Password: ${results.Password}"
+                        message: `Password Compare failed. ${data.password} 
+                        results.Password: ${results.Password}`
                     });
                 }
             });
