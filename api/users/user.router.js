@@ -30,7 +30,7 @@ router.get("/users/single",checkToken, getUserById);
 router.patch("/users",checkToken, updateUser);
 router.delete("/users",checkToken, deleteUser);
 router.patch("/users/suspend",checkToken, suspendOrUnsuspendUser);
-router.post("/login", login);
+router.post("/users/login", login);
 router.get("/workout",checkToken,getUserWorkout);
 router.post("/workout",checkToken,createWorkoutRecord);
 
