@@ -248,6 +248,11 @@ module.exports = {
 
     },
     getUserWorkout: (req, res) => {
+        return res.status(200).json({
+            success: 1,
+            rows: results
+        });
+        /*
         try {
             const data = req.query;
             getWorkoutData(data, (err, results) => {
@@ -270,7 +275,7 @@ module.exports = {
                 success: 0,
                 message: e
             });
-        }
+        }*/
 
     },
     createWorkoutRecord: (req, res) => {
