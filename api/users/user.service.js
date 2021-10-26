@@ -1,5 +1,19 @@
 const pool = require("../../config/database");
 
+const winston = require('winston');
+
+const logConfiguration = {
+    transports: [
+        new winston.transports.File({
+            level: 'error',
+            // Create the log directory if it does not exist
+            filename: '/logs/error.log'
+        })
+    ]
+};
+
+var logger = new winston.createLogger(logConfiguration);
+
 module.exports = {
     create: (data, callBack) => {
         
@@ -7,6 +21,7 @@ module.exports = {
             [data.user_name,1],
             (err, results) => {
                 if (err) {
+                    logger.error(`Error at user.service create. \n ${err}`);
                     callBack(err);
                 }
                 if(results.length > 0){
@@ -24,6 +39,7 @@ module.exports = {
                         ],
                         (error, results, fields) => {
                             if (error) {
+                                logger.error(`Error at user.service create. \n ${error}`);
                                 callBack(error);
                             }
                             return callBack(null, results);
@@ -41,6 +57,7 @@ module.exports = {
         Active = ? OR Active = ?`,
             [1, 2], (error, results, fields) => {
                 if (error) {
+                    logger.error(`Error at user.service getUsers. \n ${error}`);
                     return callBack(error);
                 }
                 return callBack(null, results);
@@ -51,6 +68,7 @@ module.exports = {
         pool.query(`SELECT Id,UserName,ParentId,Role,Active,Token FROM users WHERE Id = ?`,
             [data.id], (error, results, fields) => {
                 if (error) {
+                    logger.error(`Error at user.service getUserById. \n ${error}`);
                     return callBack(error);
                 }
                 return callBack(null, results);
@@ -67,6 +85,7 @@ module.exports = {
                 data.id
             ], (error, results, fields) => {
                 if (error) {
+                    logger.error(`Error at user.service updateUser. \n ${error}`);
                     return callBack(error);
                 }
                 return callBack(null, results[0]);
@@ -78,6 +97,7 @@ module.exports = {
 
         pool.query(sql,[data.id],(err,results,fields)=>{
             if (err) {
+                logger.error(`Error at user.service suspendOrUnsuspendUser. \n ${err}`);
                 callBack(err);
             }
             else{
@@ -92,6 +112,7 @@ module.exports = {
             ],
             (error, results, fields) => {
                 if (error) {
+                    logger.error(`Error at user.service deleteUser. \n ${error}`);
                     return callBack(error);
                 }
                 return callBack(null, results[0]);
@@ -102,6 +123,7 @@ module.exports = {
             [data.user_name,1],
             (err, results) => {
                 if (err) {
+                    logger.error(`Error at user.service getUserByUsername. \n ${err}`);
                     callback(err);
                 }
                 return callback(null, results[0]);
@@ -116,6 +138,7 @@ module.exports = {
 
         pool.query(sql,[data.userId,data.role],(err,results,fields)=>{
             if (err) {
+                logger.error(`Error at user.service getWorkoutData. \n ${err}`);
                 callBack(err);
             }
             else{
@@ -132,6 +155,7 @@ module.exports = {
 
         pool.query(sql,[data.userId,data.status,data.note],(err,results,fields)=>{
             if (err) {
+                logger.error(`Error at user.service createRecord. \n ${err}`);
                 callBack(err);
             }
             else{
