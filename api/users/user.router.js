@@ -46,8 +46,8 @@ try{
     router.delete("/users",checkToken, deleteUser);
     router.patch("/users/suspend",checkToken, suspendOrUnsuspendUser);
     router.post("/users/login", login);
-    router.get("/workout",checkToken,getUserWorkout);
-    router.post("/workout",checkToken,createWorkoutRecord);
+    router.get("/users/workout",checkToken,getUserWorkout);
+    router.post("/users/workout",checkToken,createWorkoutRecord);
 }
 catch(e){
     logger.error(`Error at user.router. \n ${e}`);
