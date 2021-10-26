@@ -248,18 +248,14 @@ module.exports = {
 
     },
     getUserWorkout: (req, res) => {
-        return res.status(200).json({
-            success: 1
-        });
-        /*
+        
         try {
             const data = req.query;
             getWorkoutData(data, (err, results) => {
                 if (err) {
-
-                    return res.send(500).json({
+                    return res.status(500).json({
                         success: 0,
-                        message: "Failed to fetch workout data"
+                        message: `Failed to fetch workout data. ${err}`
                     });
                 }
                 return res.status(200).json({
@@ -274,7 +270,7 @@ module.exports = {
                 success: 0,
                 message: e
             });
-        }*/
+        }
 
     },
     createWorkoutRecord: (req, res) => {
