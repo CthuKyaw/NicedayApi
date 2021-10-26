@@ -249,8 +249,7 @@ module.exports = {
     },
     getUserWorkout: (req, res) => {
         return res.status(200).json({
-            success: 1,
-            rows: results
+            success: 1
         });
         /*
         try {
