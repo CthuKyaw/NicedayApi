@@ -12,12 +12,17 @@ const {
 
 var winston = require('winston');
 
-var logger = new winston.Logger({
-    level: 'error',
+const logConfiguration = {
     transports: [
-        new (winston.transports.File)({ filename: 'error.log' })
+        new winston.transports.File({
+            level: 'error',
+            // Create the log directory if it does not exist
+            filename: '../../../logs/error.log'
+        })
     ]
-});
+};
+
+var logger = new winston.createLogger(logConfiguration);
 
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
@@ -44,7 +49,7 @@ module.exports = {
             });
         }
         catch (e) {
-            logger.log('error', 'Error at user.controller createUser', e);
+            logger.error(`Error at user.controller createUser. \n ${e}`);
             return res.json({
                 success: 0,
                 message: e
@@ -69,7 +74,7 @@ module.exports = {
             })
         }
         catch (e) {
-            logger.log('error', 'Error at user.controller getUsers %s', e);
+            logger.error(`Error at user.controller getUsers. \n ${e}`);
             return res.json({
                 success: 0,
                 message: e
@@ -94,7 +99,7 @@ module.exports = {
             })
         }
         catch (e) {
-            logger.log('error', 'Error at user.controller getUserById  %s', e);
+            logger.error(`Error at user.controller getUserById. \n ${e}`);
             return res.json({
                 success: 0,
                 message: e
@@ -122,7 +127,7 @@ module.exports = {
             });
         }
         catch (e) {
-            logger.log('error', 'Error at user.controller updateUser %s', e);
+            logger.error(`Error at user.controller updateUser. \n ${e}`);
             return res.json({
                 success: 0,
                 message: e
@@ -154,7 +159,7 @@ module.exports = {
             })
         }
         catch (e) {
-            logger.log('error', 'Error at user.controller deleteUser %s', e);
+            logger.error(`Error at user.controller deleteUser. \n ${e}`);
             return res.json({
                 success: 0,
                 message: e
@@ -186,7 +191,7 @@ module.exports = {
             })
         }
         catch (e) {
-            logger.log('error', 'Error at user.controller suspendOrUnsuspendUser %s', e);
+            logger.error(`Error at user.controller suspendOrUnsuspendUser. \n ${e}`);
             return res.json({
                 success: 0,
                 message: e
@@ -234,7 +239,7 @@ module.exports = {
             });
         }
         catch (err) {
-            logger.log('error', 'Error at user.controller login %s', e);
+            logger.error(`Error at user.controller login. \n ${e}`);
             return res.json({
                 success: 0,
                 message: "Request error"
@@ -260,7 +265,7 @@ module.exports = {
             })
         }
         catch (e) {
-            logger.log('error', 'Error at user.controller getUserWorkout %s', e);
+            logger.error(`Error at user.controller getUserWorkout. \n ${e}`);
             return res.json({
                 success: 0,
                 message: e
@@ -288,7 +293,7 @@ module.exports = {
             });
         }
         catch (e) {
-            logger.log('error', 'Error at user.controller createWorkoutRecord %s', e);
+            logger.error(`Error at user.controller createWorkoutRecord. \n ${e}`);
             return res.json({
                 success: 0,
                 message: e
