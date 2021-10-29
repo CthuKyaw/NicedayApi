@@ -17,6 +17,7 @@ const userRouter = require("./api/users/user.router");
 const cors = require("cors");
 
 const io = require("socket.io")(server, {
+	path: "/socket",
 	cors: {
 		origin:`${process.env.CORS_CLIENT_HOST}`,
     methods:["GET","POST"]
