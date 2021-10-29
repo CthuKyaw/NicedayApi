@@ -17,7 +17,7 @@ const {
 
 const router = require("express").Router();
 router.use(express.json());
-router.use("/*",cors({
+router.use(cors({
     origin:`${process.env.CORS_CLIENT_HOST}`,
     methods:["GET","POST","PUT","DELETE","PATCH"],
     credentials:true
