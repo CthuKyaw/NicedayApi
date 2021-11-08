@@ -27,6 +27,13 @@ var logger = new winston.createLogger(logConfiguration);
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 module.exports = {
+    Test: (req,res) => {
+        return res.json({
+            success: 1,
+            message: "Test Success",
+            data: {}
+        });
+    },
     createUser: (req, res) => {
         try {
             const body = req.body;

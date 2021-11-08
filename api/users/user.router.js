@@ -11,7 +11,8 @@ const {
     suspendOrUnsuspendUser,
     login, 
     getUserWorkout,
-    createWorkoutRecord
+    createWorkoutRecord,
+    Test
     
 } = require("./user.controller");
 
@@ -39,7 +40,8 @@ var logger = new winston.createLogger(logConfiguration);
 
 
 try{
-    router.post("/users",createUser);
+    router.get("/verifyToken",checkToken,Test);
+    router.post("/users",checkToken, createUser);
     router.get("/users/all",checkToken, getUsers);
     router.get("/users/single",checkToken, getUserById);
     router.patch("/users",checkToken, updateUser);

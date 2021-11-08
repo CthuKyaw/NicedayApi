@@ -9,7 +9,7 @@ module.exports = {
                 if(err){
                     res.json({
                         success:0,
-                        message:"Invalid Token"
+                        message:"Session Expired!"
                     })
                 }else{
                     next();
